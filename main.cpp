@@ -31,9 +31,14 @@ int main()
     int velocity{0};
     bool isInAir = false;
 
+    int frame{0};
+    const float updateTime{1.0 / 12.0};
+    float runningTime{0};
+
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
+
         const float dT{GetFrameTime()};
         BeginDrawing();
         ClearBackground(YELLOW);
@@ -54,8 +59,20 @@ int main()
             velocity += jumpVel;
         }
 
-        // posY += velocity;
+        // Upadate position
         scarfyPos.y += velocity * dT;
+
+        runningTime += dT;
+        if (runningTime >= updateTime)
+        {
+            scarfyRec.x = frame * scarfyRec.width;
+            frame++;
+            if (frame > 5)
+            {
+                frame = 0;
+            }
+            runningTime = 0;
+        }
 
         DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
 
