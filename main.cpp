@@ -14,8 +14,8 @@ int main()
     // const int rectWidth{50};
     // const int rectHeight{80};
 
-    const int gravity{1};
-    const int jumpVel{-22};
+    const int gravity{1'000};
+    const int jumpVel{-600};
 
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
     Rectangle scarfyRec;
@@ -34,6 +34,7 @@ int main()
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
+        const float dT{GetFrameTime()};
         BeginDrawing();
         ClearBackground(YELLOW);
 
@@ -44,7 +45,7 @@ int main()
         }
         else
         {
-            velocity += gravity;
+            velocity += gravity * dT;
             isInAir = true;
         }
 
@@ -54,7 +55,7 @@ int main()
         }
 
         // posY += velocity;
-        scarfyPos.y += velocity;
+        scarfyPos.y += velocity * dT;
 
         DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
 
