@@ -17,6 +17,11 @@ int main()
     const int gravity{1};
     const int jumpVel{-22};
 
+    Texture2D scarfy = LoadTexture("textures/scarfy.png");
+    Rectangle scarfyRec;
+    Vector2 scarfyPos;
+
+
     int posY{height - rectHeight};
     int velocity{0};
     bool isInAir = false;
