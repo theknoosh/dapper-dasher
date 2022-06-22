@@ -17,6 +17,18 @@ int main()
     const int gravity{1'000};
     const int jumpVel{-600};
 
+    // Nebula variables
+    Texture2D nebula = LoadTexture("textures/12_nebula_spritesheet.png");
+    Rectangle nebulaRec;
+    nebulaRec.width = nebula.width / 8;
+    nebulaRec.height = nebula.height / 8;
+    nebulaRec.x = 0;
+    nebulaRec.y = 0;
+    Vector2 nebulaPos;
+    nebulaPos.x = width;
+    nebulaPos.y = height - nebulaRec.height;
+
+    // Scarfy variables
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
     Rectangle scarfyRec;
     scarfyRec.width = scarfy.width / 6;
@@ -27,7 +39,6 @@ int main()
     scarfyPos.x = width / 2 - scarfyRec.width / 2;
     scarfyPos.y = height - scarfyRec.height;
 
-    // int posY{height - rectHeight};
     int velocity{0};
     bool isInAir = false;
 
@@ -79,5 +90,6 @@ int main()
         EndDrawing();
     }
     UnloadTexture(scarfy);
+    UnloadTexture(nebula);
     CloseWindow();
 }
