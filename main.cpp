@@ -43,9 +43,15 @@ int main()
     int velocity{0};
     bool isInAir = false;
 
+    // Scarfy animation
     int frame{0};
     const float updateTime{1.0 / 12.0};
     float runningTime{0};
+
+    // Nebula animation
+    int nebFrame{0};
+    const float nebUpdateTime{1.0 / 12.0};
+    float nebRunningTime{0};
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -53,7 +59,7 @@ int main()
 
         const float dT{GetFrameTime()};
         BeginDrawing();
-        ClearBackground(YELLOW);
+        ClearBackground(BLUE);
 
         // Upadate nebula postion
         nebPos.x += nebVel * dT;
@@ -91,6 +97,19 @@ int main()
                 }
                 runningTime = 0;
             }
+        }
+
+        // Nebula update frames
+        nebRunningTime += dT;
+        if (nebRunningTime >= nebUpdateTime)
+        {
+            nebRec.x = nebFrame * nebRec.width;
+            nebFrame++;
+            if (nebFrame > 7)
+            {
+                nebFrame = 0;
+            }
+            nebRunningTime = 0;
         }
 
         // Draw nebula
