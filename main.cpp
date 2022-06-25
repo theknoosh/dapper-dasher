@@ -4,6 +4,15 @@
 
 using namespace std;
 
+struct AnimData
+{
+    Rectangle rec;
+    Vector2 pos;
+    int frame;
+    float updateTime;
+    float runningTime;
+};
+
 int main()
 {
     const int width{800};
@@ -33,27 +42,29 @@ int main()
     neb2Rec.height = nebula.height / 8.0f;
     Vector2 neb2Pos{width + 300, height - nebRec.height};
 
-    // nebulat x velocity pixels per second
+    // nebula x velocity pixels per second
     int nebVel{-200};
 
     // Scarfy variables
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
-    Rectangle scarfyRec;
-    scarfyRec.width = scarfy.width / 6;
-    scarfyRec.height = scarfy.height;
-    scarfyRec.x = 0;
-    scarfyRec.y = 0;
-    Vector2 scarfyPos;
-    scarfyPos.x = width / 2 - scarfyRec.width / 2;
-    scarfyPos.y = height - scarfyRec.height;
+    AnimData scarflyData;
+    scarflyData.rec.width = scarfy.width / 6;
+    scarflyData.rec.height = scarfy.height;
+    scarflyData.rec.x = 0;
+    scarflyData.rec.y = 0;
+    scarflyData.pos.x = width / 2 - scarflyData.rec.width / 2;
+    scarflyData.pos.y = height - scarflyData.rec.height;
+    scarflyData.frame = 0;
+    scarflyData.updateTime = 1.0 / 12.0;
+    scarflyData.runningTime = 0.0;
 
     int velocity{0};
     bool isInAir = false;
 
     // Scarfy animation
-    int frame{0};
+    // int frame{0};
     const float updateTime{1.0 / 12.0};
-    float runningTime{0};
+    // float runningTime{0};
 
     // Nebula animation
     int nebFrame{0};
@@ -77,7 +88,7 @@ int main()
         neb2Pos.x += nebVel * dT;
 
         // Update scarfy position
-        if (scarfyPos.y >= height - scarfyRec.height)
+        if (scarflyData.pos.y >= height - scarflyData.rec.height)
         {
             velocity = 0;
             isInAir = false;
@@ -94,20 +105,20 @@ int main()
         }
 
         // Upadate position
-        scarfyPos.y += velocity * dT;
+        scarflyData.pos.y += velocity * dT;
 
         if (!isInAir)
         {
-            runningTime += dT;
-            if (runningTime >= updateTime)
+            scarflyData.runningTime += dT;
+            if (scarflyData.runningTime >= updateTime)
             {
-                scarfyRec.x = frame * scarfyRec.width;
-                frame++;
-                if (frame > 5)
+                scarflyData.rec.x = scarflyData.frame * scarflyData.rec.width;
+                scarflyData.frame++;
+                if (scarflyData.frame > 5)
                 {
-                    frame = 0;
+                    scarflyData.frame = 0;
                 }
-                runningTime = 0;
+                scarflyData.runningTime = 0;
             }
         }
 
@@ -143,7 +154,7 @@ int main()
         DrawTextureRec(nebula, neb2Rec, neb2Pos, RED);
 
         // Draw scarfy
-        DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
+        DrawTextureRec(scarfy, scarflyData.rec, scarflyData.pos, WHITE);
 
         EndDrawing();
     }
