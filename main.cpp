@@ -20,9 +20,6 @@ int main()
 
     InitWindow(width, height, "Dapper Dasher!");
 
-    // const int rectWidth{50};
-    // const int rectHeight{80};
-
     const int gravity{1'000};
     const int jumpVel{-600};
 
@@ -37,14 +34,6 @@ int main()
         0.0                                                                       // float runningTime
     };
 
-    // Nebula variables
-    // Rectangle nebRec;
-    // nebRec.x = 0;
-    // nebRec.y = 0;
-    // nebRec.width = nebula.width / 8.0f;
-    // nebRec.height = nebula.height / 8.0f;
-    // Vector2 nebPos{width, height - nebRec.height};
-
     // AnimData for neb2
     AnimData neb2Data{
         {0.0, 0.0, static_cast<float>(nebula.width / 8.0), nebula.height / 8.0f}, // Rectangle rec
@@ -54,14 +43,6 @@ int main()
         0.0                                                                       // float runningTime
     };
 
-    // Rectangle neb2Rec;
-    // neb2Rec.x = 0;
-    // neb2Rec.y = 0;
-    // neb2Rec.width = nebula.width / 8.0f;
-    // neb2Rec.height = nebula.height / 8.0f;
-    // Vector2 neb2Pos{width + 300, height - nebRec.height};
-
-    // nebula x velocity pixels per second
     int nebVel{-200};
 
     // Scarfy variables
@@ -81,18 +62,7 @@ int main()
     bool isInAir = false;
 
     // Scarfy animation
-    // int frame{0};
-    const float updateTime{1.0 / 12.0};
-    // float runningTime{0};
-
-    // Nebula animation
-    // int nebFrame{0};
-    // const float nebUpdateTime{1.0 / 12.0};
-    // float nebRunningTime{0};
-
-    // int neb2Frame{0};
-    // const float neb2UpdateTime{1.0 / 16.0};
-    // float neb2RunningTime{0};
+    // const float updateTime{1.0 / 12.0};
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -129,7 +99,7 @@ int main()
         if (!isInAir)
         {
             scarflyData.runningTime += dT;
-            if (scarflyData.runningTime >= updateTime)
+            if (scarflyData.runningTime >= scarflyData.updateTime)
             {
                 scarflyData.rec.x = scarflyData.frame * scarflyData.rec.width;
                 scarflyData.frame++;
@@ -137,7 +107,7 @@ int main()
                 {
                     scarflyData.frame = 0;
                 }
-                scarflyData.runningTime = 0;
+                scarflyData.runningTime = 0; 
             }
         }
 
