@@ -13,12 +13,20 @@ struct AnimData
     float runningTime;
 };
 
+struct WindowSize
+{
+    int width;
+    int height;
+};
+
 int main()
 {
-    const int width{800};
-    const int height{600};
+    // const int width{800};
+    // const int height{600};
 
-    InitWindow(width, height, "Dapper Dasher!");
+    WindowSize windowSize{800, 600};
+
+    InitWindow(windowSize.width, windowSize.height, "Dapper Dasher!");
 
     const int gravity{1'000};
     const int jumpVel{-600};
@@ -27,20 +35,20 @@ int main()
 
     // AnimData for nebula
     AnimData nebData{
-        {0.0, 0.0, static_cast<float>(nebula.width / 8.0), nebula.height / 8.0f}, // Rectangle rec
-        {width, static_cast<float>(height - nebula.height / 8)},                  // Vector2 pos
-        0,                                                                        // int frame
-        1.0 / 12.0,                                                               // float updateTime
-        0.0                                                                       // float runningTime
+        {0.0, 0.0, static_cast<float>(nebula.width / 8.0), nebula.height / 8.0f},                          // Rectangle rec
+        {static_cast<float>(windowSize.width), static_cast<float>(windowSize.height - nebula.height / 8)}, // Vector2 pos
+        0,                                                                                                 // int frame
+        1.0 / 12.0,                                                                                        // float updateTime
+        0.0                                                                                                // float runningTime
     };
 
     // AnimData for neb2
     AnimData neb2Data{
-        {0.0, 0.0, static_cast<float>(nebula.width / 8.0), nebula.height / 8.0f}, // Rectangle rec
-        {width + 300, static_cast<float>(height - nebula.height / 8)},            // Vector2 pos
-        0,                                                                        // int frame
-        1.0 / 16.0,                                                               // float updateTime
-        0.0                                                                       // float runningTime
+        {0.0, 0.0, static_cast<float>(nebula.width / 8.0), nebula.height / 8.0f},                                // Rectangle rec
+        {static_cast<float>(windowSize.width + 300), static_cast<float>(windowSize.height - nebula.height / 8)}, // Vector2 pos
+        0,                                                                                                       // int frame
+        1.0 / 16.0,                                                                                              // float updateTime
+        0.0                                                                                                      // float runningTime
     };
 
     int nebVel{-200};
@@ -52,8 +60,8 @@ int main()
     scarflyData.rec.height = scarfy.height;
     scarflyData.rec.x = 0;
     scarflyData.rec.y = 0;
-    scarflyData.pos.x = width / 2 - scarflyData.rec.width / 2;
-    scarflyData.pos.y = height - scarflyData.rec.height;
+    scarflyData.pos.x = windowSize.width / 2 - scarflyData.rec.width / 2;
+    scarflyData.pos.y = windowSize.height - scarflyData.rec.height;
     scarflyData.frame = 0;
     scarflyData.updateTime = 1.0 / 12.0;
     scarflyData.runningTime = 0.0;
@@ -77,7 +85,7 @@ int main()
         neb2Data.pos.x += nebVel * dT;
 
         // Update scarfy position
-        if (scarflyData.pos.y >= height - scarflyData.rec.height)
+        if (scarflyData.pos.y >= windowSize.height - scarflyData.rec.height)
         {
             velocity = 0;
             isInAir = false;
@@ -107,7 +115,7 @@ int main()
                 {
                     scarflyData.frame = 0;
                 }
-                scarflyData.runningTime = 0; 
+                scarflyData.runningTime = 0;
             }
         }
 
