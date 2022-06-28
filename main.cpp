@@ -52,8 +52,23 @@ int main()
     };
 
     // Using arrary to store nebula hazards
-    AnimData nebulae[2]{nebData, neb2Data};
+    AnimData nebulae[3]{};
 
+    for (int i = 0; i < 3; i++)
+    {
+        nebulae[i].rec.x = 0.0;
+        nebulae[i].rec.y = 0.0;
+        nebulae[i].rec.width = nebula.width / 8.0;
+        nebulae[i].rec.height = nebula.height / 8.0;
+        nebulae[i].pos.y = windowSize.height - nebula.height / 8;
+        nebulae[i].frame = 0;
+        nebulae[i].runningTime = 0.0;
+        nebulae[i].updateTime = 0.0;
+    }
+
+    nebulae[0].pos.x = windowSize.width;
+    nebulae[1].pos.x = windowSize.width + 300;
+    nebulae[2].pos.x = windowSize.width + 600;
 
     int nebVel{-200};
 
