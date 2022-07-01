@@ -19,6 +19,11 @@ struct WindowSize
     int height;
 };
 
+bool isOnGround(AnimData data, int windowHeight)
+{
+    return data.pos.y >= windowHeight - data.rec.height;
+}
+
 int main()
 {
     // const int width{800};
@@ -77,13 +82,8 @@ int main()
         BeginDrawing();
         ClearBackground(BLUE);
 
-        // Upadate nebula postion
-        // nebulae[0].pos.x += nebVel * dT;
-        // nebulae[1].pos.x += nebVel * dT;
-        // nebulae[2].pos.x += nebVel * dT;
-
         // Update scarfy position
-        if (scarflyData.pos.y >= windowSize.height - scarflyData.rec.height)
+        if (isOnGround(scarflyData, windowSize.height))
         {
             velocity = 0;
             isInAir = false;
