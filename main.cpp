@@ -47,7 +47,7 @@ int main()
     // const int width{800};
     // const int height{600};
 
-    WindowSize windowSize{1200, 600};
+    WindowSize windowSize{800, 600};
 
     InitWindow(windowSize.width, windowSize.height, "Dapper Dasher!");
 
@@ -92,6 +92,11 @@ int main()
     int velocity{0};
     bool isInAir = false;
 
+    // background x pos
+    Vector2 bgPos{0.0, 0.0};
+
+    Texture2D background = LoadTexture("textures/far-buildings.png");
+
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
@@ -99,6 +104,13 @@ int main()
         const float dT{GetFrameTime()};
         BeginDrawing();
         ClearBackground(BLUE);
+
+        bgPos.x -= 20 * dT;
+
+        // Draw the background
+        // Vector2 bgPos2{static_cast<float>(background.width * 3.5), 0.0};
+        DrawTextureEx(background, bgPos, 0.0, 3.5, WHITE);
+        // DrawTextureEx(background, bgPos2, 0.0, 3.5, WHITE);
 
         // Update scarfy position
         if (isOnGround(scarflyData, windowSize.height))
@@ -145,5 +157,6 @@ int main()
     }
     UnloadTexture(scarfy);
     UnloadTexture(nebula);
+    UnloadTexture(background);
     CloseWindow();
 }
