@@ -93,7 +93,7 @@ int main()
     bool isInAir = false;
 
     // background x pos
-    Vector2 bgPos{0.0, 0.0};
+    float bgXPos = 0.0;
 
     Texture2D background = LoadTexture("textures/far-buildings.png");
 
@@ -105,12 +105,16 @@ int main()
         BeginDrawing();
         ClearBackground(BLUE);
 
-        bgPos.x -= 20 * dT;
+        bgXPos -= 20 * dT;
+        if (bgXPos <= -background.width * 3.5) {
+            bgXPos = 0.0;
+        }
 
-        // Draw the background
-        // Vector2 bgPos2{static_cast<float>(background.width * 3.5), 0.0};
-        DrawTextureEx(background, bgPos, 0.0, 3.5, WHITE);
-        // DrawTextureEx(background, bgPos2, 0.0, 3.5, WHITE);
+        Vector2 bg1Pos{bgXPos, 0.0};
+        DrawTextureEx(background, bg1Pos, 0.0, 3.5, WHITE);
+        float newXPos = bgXPos + background.width * 3.5;
+        Vector2 bg2Pos{newXPos, 0.0};
+        DrawTextureEx(background, bg2Pos, 0.0, 3.5, WHITE);
 
         // Update scarfy position
         if (isOnGround(scarflyData, windowSize.height))
