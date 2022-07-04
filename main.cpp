@@ -94,8 +94,12 @@ int main()
 
     // background x pos
     float bgXPos = 0.0;
+    float mgX{};
+    float fgX{};
 
     Texture2D background = LoadTexture("textures/far-buildings.png");
+    Texture2D midground = LoadTexture("textures/back-buildings.png");
+    Texture2D foreground = LoadTexture("textures/foreground.png");
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -106,8 +110,21 @@ int main()
         ClearBackground(BLUE);
 
         bgXPos -= 20 * dT;
-        if (bgXPos <= -background.width * 3.5) {
+        if (bgXPos <= -background.width * 3.5)
+        {
             bgXPos = 0.0;
+        }
+
+        mgX -= 40 * dT;
+        if (mgX <= -midground.width * 3.5)
+        {
+            mgX = 0;
+        }
+
+        fgX -= 80 * dT;
+        if (fgX <= -foreground.width * 3.5)
+        {
+            fgX = 0;
         }
 
         Vector2 bg1Pos{bgXPos, 0.0};
@@ -115,6 +132,18 @@ int main()
         float newXPos = bgXPos + background.width * 3.5;
         Vector2 bg2Pos{newXPos, 0.0};
         DrawTextureEx(background, bg2Pos, 0.0, 3.5, WHITE);
+
+        Vector2 mg1Pos{mgX, 0.0};
+        DrawTextureEx(midground, mg1Pos, 0.0, 3.5, WHITE);
+        float mgXPos = mgX + midground.width * 3.5;
+        Vector2 mg2Pos{mgXPos, 0.0};
+        DrawTextureEx(midground, mg2Pos, 0.0, 3.5, WHITE);
+
+        Vector2 fg1Pos{fgX, 0.0};
+        DrawTextureEx(foreground, fg1Pos, 0.0, 3.5, WHITE);
+        float fgXPos = fgX + foreground.width * 3.5;
+        Vector2 fg2Pos{fgXPos, 0.0};
+        DrawTextureEx(foreground, fg2Pos, 0.0, 3.5, WHITE);
 
         // Update scarfy position
         if (isOnGround(scarflyData, windowSize.height))
@@ -162,5 +191,7 @@ int main()
     UnloadTexture(scarfy);
     UnloadTexture(nebula);
     UnloadTexture(background);
+    UnloadTexture(midground);
+    UnloadTexture(foreground);
     CloseWindow();
 }
