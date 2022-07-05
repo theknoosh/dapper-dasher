@@ -74,6 +74,8 @@ int main()
         nebulae[i].pos.x = windowSize.width + i * 300;
     }
 
+    float finishline{ nebulae[sizeOfNebulae - 1].pos.x};
+
     int nebVel{-200};
 
     // Scarfy variables
@@ -177,6 +179,9 @@ int main()
 
             nebulae[i].pos.x += nebVel * dT;
         }
+
+        // Update finishline
+        finishline += nebVel * dT;
 
         for (int i = 0; i < sizeOfNebulae; i++)
         {
